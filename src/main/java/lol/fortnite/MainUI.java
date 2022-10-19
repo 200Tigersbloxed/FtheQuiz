@@ -6,6 +6,7 @@ import imgui.app.Configuration;
 import lol.fortnite.Study.StudyList;
 import lol.fortnite.Windows.CreateStudyListWindow;
 import lol.fortnite.Windows.IWindow;
+import lol.fortnite.Windows.ManageStudyListWindow;
 
 public class MainUI extends Application {
     private Configuration config;
@@ -15,7 +16,7 @@ public class MainUI extends Application {
     @Override
     protected void configure(final Configuration config){
         this.config = config;
-        config.setTitle("FTheQuiz");
+        config.setTitle("FtheQuiz");
         config.setHeight(800);
         config.setWidth(1000);
     }
@@ -34,10 +35,10 @@ public class MainUI extends Application {
         }
         for (StudyList studyList : StudyList.StudyLists){
             if (ImGui.button(studyList.ListName)){
-                currentMainWindow = new CreateStudyListWindow(() -> {
+                currentMainWindow = new ManageStudyListWindow(studyList, () -> {
                     currentMainWindow = null;
                     StudyList.LoadStudyLists();
-                }, studyList);
+                });
             }
         }
         ImGui.end();

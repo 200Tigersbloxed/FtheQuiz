@@ -8,6 +8,7 @@ import lol.fortnite.util.Dictionary;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Objects;
 
 public class StudyList extends Config {
     public static StudyList[] StudyLists = new StudyList[0];
@@ -73,7 +74,7 @@ public class StudyList extends Config {
 
     public static StudyList GetStudyList(String name){
         for (StudyList studyList : StudyLists)
-            if(studyList.ListName == name)
+            if(Objects.equals(studyList.ListName, name))
                 return studyList;
         return null;
     }
