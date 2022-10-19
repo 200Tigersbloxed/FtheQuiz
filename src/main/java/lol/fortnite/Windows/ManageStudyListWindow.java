@@ -34,6 +34,13 @@ public class ManageStudyListWindow implements IWindow{
                     if(studyList == null)
                         onCallback.run();
                 }, studyList);
+            ImGui.separator();
+            if(ImGui.button("Flashcards"))
+                overrideWindow = new FlashcardStudyWindow(studyList, () -> overrideWindow = null);
+            ImGui.sameLine();
+            if(ImGui.button("Fill-in"))
+                overrideWindow = new FillStudyWindow(studyList, () -> overrideWindow = null);
+            ImGui.separator();
             if(ImGui.button("Go Back"))
                 onCallback.run();
         }

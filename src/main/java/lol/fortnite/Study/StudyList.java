@@ -115,6 +115,13 @@ public class StudyList extends Config {
         return terms;
     }
 
+    public StudyTerm GetStudyTerm(int i){
+        StudyTerm[] studyTerms = GetStudyTerms();
+        if(studyTerms.length > i)
+            return studyTerms[i];
+        return null;
+    }
+
     @Override
     public String Serialize() {
         Keys = new String[StudyTerms.getSize()];

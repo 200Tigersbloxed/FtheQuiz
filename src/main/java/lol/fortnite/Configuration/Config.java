@@ -5,10 +5,11 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.lang.reflect.Field;
-import java.nio.file.Path;
-import java.nio.file.Files;
 import java.util.Objects;
 
 public class Config {
@@ -55,8 +56,12 @@ public class Config {
         try{
             String json = Serialize();
             File file = new File(ConfigLocation);
-            Files.createDirectories(Path.of(file.getParent()));
-            Files.writeString(Path.of(ConfigLocation), json);
+            String dir = file.getParent();
+            new File(dir).mkdirs();
+            FileWriter fileWriter = new FileWriter(file);
+            for(int i = 0; i < json.length(); i++)
+                fileWriter.write(json.charAt(i));
+            fileWriter.close();
         }
         catch (Exception e){
             System.out.println("Failed to SaveToDisk!");
@@ -66,7 +71,17 @@ public class Config {
 
     public String ReadFromDisk(){
         try{
-            return Files.readString(Path.of(ConfigLocation));
+            final StringBuilder contentBuilder = new StringBuilder();
+            File file = new File(ConfigLocation);
+            FileReader fileReader = new FileReader(file);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String currentLine;
+            while ((currentLine = bufferedReader.readLine()) != null){
+                contentBuilder.append(currentLine).append("\n");
+            }
+            bufferedReader.close();
+            fileReader.close();
+            return contentBuilder.toString();
         }
         catch (Exception e){
             System.out.println("Failed to ReadFromDisk!");

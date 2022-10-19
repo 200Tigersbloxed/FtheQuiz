@@ -92,6 +92,7 @@ public class CreateStudyListWindow implements IWindow{
             if(ImGui.button("Delete")){
                 File f = new File(studyList.ConfigLocation);
                 f.delete();
+                StudyList.RemoveStudyList(studyList);
                 onDone.run();
             }
         }
